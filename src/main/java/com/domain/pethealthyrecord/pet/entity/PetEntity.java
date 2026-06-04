@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "pet")
 @Builder
-public class petEntity {
+public class PetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

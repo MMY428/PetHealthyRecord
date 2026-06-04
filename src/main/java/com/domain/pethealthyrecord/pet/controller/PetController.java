@@ -1,5 +1,6 @@
 package com.domain.pethealthyrecord.pet.controller;
 
+import com.domain.pethealthyrecord.pet.service.PetService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -8,24 +9,24 @@ public class PetController {
 
     private final PetService petService;
 
-    public PetController(PetService perService){
-        this.petService = perService;
+    public PetController(PetService petService){
+        this.petService = petService;
     }
 
     @PostMapping
-    public String createPet(@RequestBody petCreateRequest request){
+    public String createPet(@RequestBody PetCreateRequest request){
         petService.createPet(request);
         return "반려동물 등록 완료";
     }
 
     @GetMapping
-    public List<petResponse> getPets(){
+    public List<PetResponse> getPets(){
         return petService.getPets();
     }
 
     @GetMapping("/{petId}")
-    public petResponse getPet(@PathVariable Long petId) {
-        return petService.getPet();
+    public PetResponse getPet(@PathVariable Long petId) {
+        return petService.getPet(petId);
     }
 
     @PutMapping("/{petId}")
