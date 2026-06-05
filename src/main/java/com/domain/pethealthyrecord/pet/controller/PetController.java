@@ -1,17 +1,20 @@
 package com.domain.pethealthyrecord.pet.controller;
 
+import com.domain.pethealthyrecord.pet.dto.PetCreateRequest;
+import com.domain.pethealthyrecord.pet.dto.PetResponse;
+import com.domain.pethealthyrecord.pet.dto.PetUpdateRequest;
 import com.domain.pethealthyrecord.pet.service.PetService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/pets")
+@RequiredArgsConstructor
 public class PetController {
 
     private final PetService petService;
-
-    public PetController(PetService petService){
-        this.petService = petService;
-    }
 
     @PostMapping
     public String createPet(@RequestBody PetCreateRequest request){
