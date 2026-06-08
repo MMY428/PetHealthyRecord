@@ -3,16 +3,13 @@ package com.domain.pethealthyrecord.pet.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
+@Getter
 @Table(name = "pet")
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class PetEntity {
@@ -39,4 +36,35 @@ public class PetEntity {
     @Column(name = "pet_imageUrl", nullable = false)
     @NotBlank(message = "이미지 넣으세요")
     private String imageUrl;
+
+
+    @Builder
+    public PetEntity(
+            String name,
+            String species,
+            String breed,
+            LocalDate birthDate,
+            String imageUrl
+    ) {
+        this.name = name;
+        this.species = species;
+        this.breed = breed;
+        this.birthDate = birthDate;
+        this.imageUrl = imageUrl;
+    }
+
+
+    public void update(
+            String name,
+            String species,
+            String breed,
+            LocalDate birthDate,
+            String imageUrl
+    ) {
+        this.name = name;
+        this.species = species;
+        this.breed = breed;
+        this.birthDate = birthDate;
+        this.imageUrl = imageUrl;
+    }
 }
