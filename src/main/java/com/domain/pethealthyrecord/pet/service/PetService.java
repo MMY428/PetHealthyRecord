@@ -7,16 +7,19 @@ import com.domain.pethealthyrecord.pet.entity.PetEntity;
 import com.domain.pethealthyrecord.pet.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PetService {
 
     private final PetRepository petRepository;
 
     //createPet
+    @Transactional
     public void createPet(PetCreateRequest request) {
         PetEntity pet = PetEntity.builder()
                 .name(request.getName())
@@ -44,8 +47,7 @@ public class PetService {
     }
     //getPet
     public PetResponse getPet(Long petId) {
-        PetEntity pet = petRepository.findById(petId)
-                .orElseThrow(()-> new IllegalArgumentException("반려동물 없음"));
+        PetEntity pet = findPet(petId);
         return new PetResponse(
                 pet.getId(),
                 pet.getName(),
@@ -57,9 +59,9 @@ public class PetService {
     }
 
     //updatePet
+    @Transactional
     public void updatePet(Long petId, PetUpdateRequest request) {
-        PetEntity pet = petRepository.findById(petId)
-                .orElseThrow(()-> new IllegalArgumentException("반려동물 없음"));
+        PetEntity pet = findPet(petId);
         pet.update(
                 request.getName(),
                 request.getSpecies(),
@@ -71,7 +73,13 @@ public class PetService {
     }
 
     //deletePet
+    @Transactional
     public void deletePet(Long petId) {
-        petRepository.deleteById(petId);
+        PetEntity pet = findPet(petId);
+        petRepository.delete(pet);
+    }
+    private PetEntity findPet(Long petId) {
+        return petRepository.findById(petId)
+                .orElseThrow(() -> new IllegalArgumentException("반려동물 없음"));
     }
 }

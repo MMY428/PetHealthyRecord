@@ -4,7 +4,10 @@ import com.domain.pethealthyrecord.pet.dto.PetCreateRequest;
 import com.domain.pethealthyrecord.pet.dto.PetResponse;
 import com.domain.pethealthyrecord.pet.dto.PetUpdateRequest;
 import com.domain.pethealthyrecord.pet.service.PetService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +20,9 @@ public class PetController {
     private final PetService petService;
 
     @PostMapping
-    public String createPet(@RequestBody PetCreateRequest request){
+    public ResponseEntity<Void> createPet(@Valid @RequestBody PetCreateRequest request){
         petService.createPet(request);
-        return "반려동물 등록 완료";
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
@@ -33,15 +36,15 @@ public class PetController {
     }
 
     @PutMapping("/{petId}")
-    public String updatePet(@PathVariable Long petId,
-                            @RequestBody PetUpdateRequest request){
+    public ResponseEntity<Void> updatePet(@PathVariable Long petId,
+                                          @Valid @RequestBody PetUpdateRequest request){
         petService.updatePet(petId, request);
-        return "반려동물 수정 완료";
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{petId}")
-    public String deletePet(@PathVariable Long petId){
+    public ResponseEntity<Void> deletePet(@PathVariable Long petId){
         petService.deletePet(petId);
-        return "반려동물 삭제 완료";
+        return ResponseEntity.noContent().build();
     }
 }
