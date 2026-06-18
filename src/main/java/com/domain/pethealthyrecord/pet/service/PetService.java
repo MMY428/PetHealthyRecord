@@ -78,6 +78,7 @@ public class PetService {
         PetEntity pet = findPet(petId);
         petRepository.delete(pet);
     }
+
     private PetEntity findPet(Long petId) {
         return petRepository.findById(petId)
                 .orElseThrow(() -> new IllegalArgumentException("반려동물 없음"));

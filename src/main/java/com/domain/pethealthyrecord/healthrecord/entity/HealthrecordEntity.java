@@ -3,10 +3,7 @@ package com.domain.pethealthyrecord.healthrecord.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -45,4 +42,41 @@ public class HealthrecordEntity {
     @Column(name = "healthyRecord_recordedAt", nullable = false)
     @NotNull(message = "기록 시간")
     private LocalDateTime recordedAt;
+
+    @Builder
+    public HealthrecordEntity(
+            Long petId,
+            Double weight,
+            Integer foodAmount,
+            String symptom,
+            String memo,
+            String imageUrl,
+            LocalDateTime recordedAt
+    ) {
+        this.petId = petId;
+        this.weight = weight;
+        this.foodAmount = foodAmount;
+        this.symptom = symptom;
+        this.memo = memo;
+        this.imageUrl = imageUrl;
+        this.recordedAt = recordedAt;
+    }
+
+    public void update(
+            Long petId,
+            Double weight,
+            Integer foodAmount,
+            String symptom,
+            String memo,
+            String imageUrl,
+            LocalDateTime recordedAt
+    ) {
+        this.petId = petId;
+        this.weight = weight;
+        this.foodAmount = foodAmount;
+        this.symptom = symptom;
+        this.memo = memo;
+        this.imageUrl = imageUrl;
+        this.recordedAt = recordedAt;
+    }
 }
